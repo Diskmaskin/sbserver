@@ -15,9 +15,17 @@
     <servlet-name>api</servlet-name>
     <servlet-class>se.gu.ait.sbserver.servlet.SystemetWebAPI</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>history</servlet-name>
+    <servlet-class>se.gu.ait.sbserver.servlet.HistoryWebAPI</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>api</servlet-name>
     <url-pattern>/search/*</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>history</servlet-name>
+    <url-pattern>/history/*</url-pattern>
   </servlet-mapping>
   <listener>
     <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>

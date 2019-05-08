@@ -33,6 +33,8 @@ public class SystemetWebAPI extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Request:\n" + request);
+        System.out.println("Response:\n" + response);
         logger.info("Starting up");
         request.setCharacterEncoding(UTF_8.name());
         //response.setContentType("text/html;charset="+UTF_8.name());

@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
  * <p>An implementation of ProuctLine which reads products from the database.
  * </p>
  */
-public class SQLBasedProductLine implements ProductLine {
+public class SQLBasedHistoryProductLine implements ProductLine {
 
   private List<Product> products;
 
   // Prevent instantiation from outside this package
-  SQLBasedProductLine() { }
+  SQLBasedHistoryProductLine() { }
   
   public List<Product> getProductsFilteredBy(Predicate<Product> predicate) {
     readProductsFromDatabase();
