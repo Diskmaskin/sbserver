@@ -129,6 +129,8 @@ public class JsonExporter implements Product.Exporter {
    * @return A String with a Json object representation of a product
    */
   public String toJsonString() {
+    //System.out.println("\nprice: " + price + "\nalcohol: " + alcohol + "\nvolume: " + volume + "\nnr: " + nr + "\nproductGroup: " + productGroup + 
+    //                   "\ntype: " + type + "\nadded: " + added + "\ndropped: " + dropped);
     StringBuilder json = new StringBuilder("  {\n")
       .append("    \"name\": \"")
       .append(escape(name)).append("\",\n")
@@ -140,6 +142,10 @@ public class JsonExporter implements Product.Exporter {
       .append(String.format("%.2f", alcohol)).append(",\n")
       .append("    \"nr\": ")
       .append(String.format("%d", nr)).append(",\n")
+      .append("    \"added\": \"")
+      .append(escape(added)).append("\"\n")
+      .append("    \"dropped\": ")
+      .append(String.format("%d", dropped)).append(",\n")
       .append("    \"product_group\": \"")
       .append(escape(productGroup)).append("\"\n")
       .append("  }");

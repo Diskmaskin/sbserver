@@ -17,7 +17,9 @@ public class DBHelper {
     public static final int PRICE = 4;
     public static final int VOLUME = 5;
     public static final int TYPE = 6;
-    public static final int PRODUCT_GROUP = 7;
+    public static final int ADDED = 7;
+    public static final int DROPPED = 8;
+    public static final int PRODUCT_GROUP = 9;
   }
   // Tables
   private static final String PRODUCT_TABLE = "product";
@@ -77,10 +79,13 @@ public class DBHelper {
   }
 
   public static ResultSet addedHistoryResultSet() {
+    //SELECT product.name, product.nr, product.alcohol, product.price, product.volume, product.type, product.added, product.dropped, productGroup.name
+    //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'start_date' AND 'end_date';
     return null;
   }
 
   public static ResultSet priceHistoryResultSet() {
+    //SELECT nr, price, date FROM priceHistory WHERE nr=??? AND date between 'start_date' AND 'end_date';
     return null;
   }
 

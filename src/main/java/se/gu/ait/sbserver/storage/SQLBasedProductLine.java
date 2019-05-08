@@ -43,13 +43,18 @@ public class SQLBasedProductLine implements ProductLine {
         int nr;
         String productGroup;
         String type;
+        String added;
+        int dropped;
         name = rs.getString(DBHelper.ColumnId.NAME);
         alcohol = rs.getDouble(DBHelper.ColumnId.ALCOHOL);
         volume = rs.getInt(DBHelper.ColumnId.VOLUME);
         price = rs.getDouble(DBHelper.ColumnId.PRICE);
         nr = rs.getInt(DBHelper.ColumnId.PRODUCT_NR);
         type = rs.getString(DBHelper.ColumnId.TYPE);
+        added = rs.getString(DBHelper.ColumnId.ADDED);
+        dropped = rs.getInt(DBHelper.ColumnId.DROPPED);
         productGroup = rs.getString(DBHelper.ColumnId.PRODUCT_GROUP);
+        
         products.add(new Product.Builder()
                      .name(name)
                      .price(price)
@@ -58,6 +63,8 @@ public class SQLBasedProductLine implements ProductLine {
                      .nr(nr)
                      .productGroup(productGroup)
                      .type(type)
+                     .added(added)
+                     .dropped(dropped)
                      .build());
       }
     } catch (SQLException sqle) {
