@@ -54,7 +54,8 @@ public class SQLBasedProductLine implements ProductLine {
         added = rs.getString(DBHelper.ColumnId.ADDED);
         dropped = rs.getInt(DBHelper.ColumnId.DROPPED);
         productGroup = rs.getString(DBHelper.ColumnId.PRODUCT_GROUP);
-        
+        System.out.println("\nprice: " + price + "\nalcohol: " + alcohol + "\nvolume: " + volume + "\nnr: " + nr + "\nproductGroup: " + productGroup + 
+                      "\ntype: " + type + "\nadded: " + added + "\ndropped: " + dropped);
         products.add(new Product.Builder()
                      .name(name)
                      .price(price)

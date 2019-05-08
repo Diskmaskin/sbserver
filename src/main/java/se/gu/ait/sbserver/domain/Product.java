@@ -195,7 +195,7 @@ public class Product {
         this.productGroup = builder.productGroup;
         this.type = builder.type;
         this.added = builder.added;
-        this.dropped = dropped;
+        this.dropped = builder.dropped;
     }
 
     /**

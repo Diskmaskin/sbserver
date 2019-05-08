@@ -31,10 +31,11 @@ public class SQLBasedHistoryProductLine implements ProductLine {
   }
 
   private void readProductsFromDatabase() {
+    DBHelper dbHelper = new DBHelper();
     System.out.println("Reading products from database.");
     products = new ArrayList<>();
     try {
-      ResultSet rs = DBHelper.productsResultSet();
+      ResultSet rs = dbHelper.productsResultSet();
       while (rs.next()) {
         String name;
         double alcohol;
@@ -60,6 +61,7 @@ public class SQLBasedHistoryProductLine implements ProductLine {
                      .type(type)
                      .build());
       }
+      dbHelper = null;
     } catch (SQLException sqle) {
       sqle.printStackTrace();
     }
