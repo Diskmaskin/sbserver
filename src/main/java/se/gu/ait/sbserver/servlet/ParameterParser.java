@@ -36,7 +36,9 @@ public class ParameterParser {
           "min_price",
           "max_price",
           "min_alcohol",
-          "max_alcohol"
+          "max_alcohol", 
+          "start_date",
+          "end_date"
         }).collect(Collectors.toList()).contains(key.split("=")[0]);
   }
   

@@ -45,6 +45,8 @@ public class JsonExporter implements Product.Exporter {
   private int nr;
   private String productGroup;
   private String type;
+  private String added;
+  private int dropped;
 
   @Override
   public void addName(String name) {
@@ -81,6 +83,14 @@ public class JsonExporter implements Product.Exporter {
     this.type = type;
   }
 
+  public void addAdded(String added) {
+    this.added = added;
+  }
+
+  public void addDropped(int dropped) {
+    this.dropped = dropped;
+  }
+
   /**
    * Returns the exported Product as a plain String 
    * for debuggin purposes
@@ -100,6 +110,10 @@ public class JsonExporter implements Product.Exporter {
       .append(productGroup)
       .append(" ")
       .append(type)
+      .append(" ")
+      .append(added)
+      .append(" ")
+      .append(dropped)
       .toString();
   }
   private String escape(String string) {

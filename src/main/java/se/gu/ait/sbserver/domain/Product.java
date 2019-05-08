@@ -69,6 +69,8 @@ public class Product {
     private int nr; // XML: <nr>nnn</nr> unique nr in the catalog
     private String productGroup; // e.g. <Varugrupp>Okryddad sprit</Varugrupp>
     private String type; // e.g. <Typ>Syrlig öl</Typ>
+    private String added; // date: YYYY-MM-DD
+    private int dropped; // 1 or 0
 
     /**
      * Defines the interface for objects we can export a
@@ -84,6 +86,8 @@ public class Product {
         void addNr(int nr);
         void addProductGroup(String productGroup);
         void addType(String type);
+        void addAdded(String added);
+        void addDropped(int dropped);
     }
 
     /**
@@ -97,6 +101,8 @@ public class Product {
         private int nr; // XML: <nr>nnn</nr> unique nr in the catalog
         private String productGroup; // e.g. <Varugrupp>Okryddad sprit</Varugrupp>
         private String type;
+        private String added;
+        private int dropped;
 
         /**
          * Provides the Product name
@@ -159,6 +165,17 @@ public class Product {
         /**
          *
          */
+
+        public Builder added(String added) {
+            this.added = added;
+            return this;
+        }
+
+        public Builder dropped(int dropped) {
+            this.dropped = dropped;
+            return this;
+        }
+
         public Product build() {
             return new Product(this);
         }
@@ -177,6 +194,8 @@ public class Product {
         this.nr = builder.nr;
         this.productGroup = builder.productGroup;
         this.type = builder.type;
+        this.added = builder.added;
+        this.dropped = dropped;
     }
 
     /**
@@ -209,6 +228,8 @@ public class Product {
         builder.addVolume(volume);
         builder.addProductGroup(productGroup);
         builder.addType(type);
+        builder.addAdded(added);
+        builder.addDropped(dropped);
     }
     /**
      * A Comparator that orders Products based on their name.
@@ -292,6 +313,14 @@ public class Product {
      */
     public int nr() {
         return nr;
+    }
+
+    public String added() {
+        return added;
+    }
+
+    public int dropped() {
+        return dropped;
     }
 
     /**

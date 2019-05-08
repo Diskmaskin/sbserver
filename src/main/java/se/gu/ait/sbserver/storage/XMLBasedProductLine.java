@@ -46,10 +46,11 @@ public class XMLBasedProductLine implements ProductLine {
   static final String ALCOHOL = "Alkoholhalt";
   static final String PRICE = "Prisinklmoms";
   static final String VOLUME = "Volymiml";
-  static final String DROPPED = "Utgått";  
   static final String NR = "nr";
   static final String PRODUCT_GROUP = "Varugrupp";
   static final String TYPE = "Typ";
+  static final String ADDED = "Saljstart";
+  static final String DROPPED = "Utgått";
   
   private List<Product> products;
 

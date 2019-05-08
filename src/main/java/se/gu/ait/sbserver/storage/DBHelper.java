@@ -30,6 +30,8 @@ public class DBHelper {
   private static final String VOLUME = "volume";
   private static final String TYPE = "type";
   private static final String PRODUCT_GROUP_ID = "productGroupId";
+  private static final String ADDED = "added";
+  private static final String DROPPED = "dropped";
   // productGroup table columns
   private static final String ID = "id";
   private static final String PRODUCT_GROUP = "name";
@@ -59,6 +61,8 @@ public class DBHelper {
         .append(", ").append(PRODUCT_TABLE).append(".").append(PRICE)
         .append(", ").append(PRODUCT_TABLE).append(".").append(VOLUME)
         .append(", ").append(PRODUCT_TABLE).append(".").append(TYPE)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(ADDED)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(DROPPED)
         .append(", ").append(PRODUCT_GROUP_TABLE).append(".").append(PRODUCT_GROUP)
         .append(" FROM ").append(PRODUCT_TABLE).append(" JOIN ").append(PRODUCT_GROUP_TABLE)
         .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
@@ -71,4 +75,13 @@ public class DBHelper {
       return null;
     }
   }
+
+  public static ResultSet addedHistoryResultSet() {
+    return null;
+  }
+
+  public static ResultSet priceHistoryResultSet() {
+    return null;
+  }
+
 }

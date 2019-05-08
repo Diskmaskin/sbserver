@@ -10,6 +10,8 @@ public abstract class AbstractProductExporter implements Product.Exporter {
   protected int nr;
   protected String productGroup;
   protected String type;
+  protected String added;
+  protected int dropped;
 
   @Override
   public void addName(String name) {
@@ -44,6 +46,16 @@ public abstract class AbstractProductExporter implements Product.Exporter {
   @Override
   public void addType(String type) {
     this.type = type;
+  }
+
+  @Override
+  public void addAdded(String added) {
+    this.added = added;
+  }
+
+  @Override
+  public void addDropped(int dropped) {
+    this.dropped = dropped;
   }
 
 }
