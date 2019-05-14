@@ -30,6 +30,52 @@ public class SQLBasedHistoryProductLine implements ProductLine {
     return products;
   }
 
+  public List<Product> getProductsByAddedHistory(final String start, final String end) {
+    DBHelper dbHelper = new DBHelper();
+    System.out.println("Reading history products from database.");
+    products = new ArrayList<>();
+    try {
+      ResultSet rs = dbHelper.addedHistoryResultSet(start, end);
+      while (rs.next()) {
+        String name;
+        double alcohol;
+        int volume;
+        double price;
+        int nr;
+        String productGroup;
+        String type;
+        String added;
+        int dropped;
+        name = rs.getString(DBHelper.ColumnId.NAME);
+        alcohol = rs.getDouble(DBHelper.ColumnId.ALCOHOL);
+        volume = rs.getInt(DBHelper.ColumnId.VOLUME);
+        price = rs.getDouble(DBHelper.ColumnId.PRICE);
+        nr = rs.getInt(DBHelper.ColumnId.PRODUCT_NR);
+        type = rs.getString(DBHelper.ColumnId.TYPE);
+        productGroup = rs.getString(DBHelper.ColumnId.PRODUCT_GROUP);
+        added = rs.getString(DBHelper.ColumnId.ADDED);
+        dropped = rs.getInt(DBHelper.ColumnId.DROPPED);
+        products.add(new Product.Builder()
+                     .name(name)
+                     .price(price)
+                     .alcohol(alcohol)
+                     .volume(volume)
+                     .nr(nr)
+                     .productGroup(productGroup)
+                     .type(type)
+                     .added(added)
+                     .dropped(dropped)
+                     .build());
+                    //  System.out.println("\nprice: " + price + "\nalcohol: " + alcohol + "\nvolume: " + volume + "\nnr: " + nr + "\nproductGroup: " + productGroup + 
+                    //   "\ntype: " + type + "\nadded: " + added + "\ndropped: " + dropped);
+      }
+      // dbHelper = null;
+    } catch (SQLException sqle) {
+      sqle.printStackTrace();
+    }
+    return products;
+  }
+
   private void readProductsFromDatabase() {
     DBHelper dbHelper = new DBHelper();
     System.out.println("Reading products from database.");
@@ -44,6 +90,8 @@ public class SQLBasedHistoryProductLine implements ProductLine {
         int nr;
         String productGroup;
         String type;
+        String added;
+        int dropped;
         name = rs.getString(DBHelper.ColumnId.NAME);
         alcohol = rs.getDouble(DBHelper.ColumnId.ALCOHOL);
         volume = rs.getInt(DBHelper.ColumnId.VOLUME);
@@ -51,6 +99,8 @@ public class SQLBasedHistoryProductLine implements ProductLine {
         nr = rs.getInt(DBHelper.ColumnId.PRODUCT_NR);
         type = rs.getString(DBHelper.ColumnId.TYPE);
         productGroup = rs.getString(DBHelper.ColumnId.PRODUCT_GROUP);
+        added = rs.getString(DBHelper.ColumnId.ADDED);
+        dropped = rs.getInt(DBHelper.ColumnId.DROPPED);
         products.add(new Product.Builder()
                      .name(name)
                      .price(price)
@@ -59,6 +109,8 @@ public class SQLBasedHistoryProductLine implements ProductLine {
                      .nr(nr)
                      .productGroup(productGroup)
                      .type(type)
+                     .added(added)
+                     .dropped(dropped)
                      .build());
       }
       dbHelper = null;

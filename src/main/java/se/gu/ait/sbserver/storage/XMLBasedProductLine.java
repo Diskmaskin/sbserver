@@ -201,5 +201,10 @@ public class XMLBasedProductLine implements ProductLine {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public List<Product> getProductsByAddedHistory(String start, String end) {
+    return null;
+  }
   
 }

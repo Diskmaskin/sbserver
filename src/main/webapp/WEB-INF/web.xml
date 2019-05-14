@@ -9,6 +9,7 @@
 
   <context-param>
     <param-name>ProductLine</param-name>
+    <param-name>HistoryProductLine</param-name>
     <param-value>DB</param-value>
   </context-param>
   <servlet>

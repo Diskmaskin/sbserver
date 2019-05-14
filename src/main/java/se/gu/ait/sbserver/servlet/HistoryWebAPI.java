@@ -10,6 +10,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.Locale;
@@ -44,38 +45,47 @@ public class HistoryWebAPI extends HttpServlet {
                         UTF_8), true);
         ParameterParser paramParser;
         StringBuilder sb;
-        // try {
-        //     paramParser = new ParameterParser(request.getQueryString().split("&"));
-
-        //     Predicate<Product> filter = paramParser.filter();
-        //     System.setProperty("ProductLine", getServletContext().getInitParameter("HistoryProductLine"));
-        //     //System.out.println("ProductLine property: " + System.getProperty("ProductLine"));
-        //     ProductLine productLine = ProductLineFactory.getProductLine();
-        //     List<Product> products = productLine.getProductsFilteredBy(filter);
-        //     Formatter formatter = FormatterFactory.getFormatter();
-        //     String json = formatter.format(products);
-        //     sb = new StringBuilder(json);
-        //     if (paramParser.invalidArgs().size() != 0 &&
-        //             products.size() == 0) {
-        //         sb = new StringBuilder("{ \"error\": \"")
-        //                 .append("Bad parameters: ")
-        //                 .append(paramParser.invalidArgs().toString())
-        //                 .append("\" }");
-        //         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        //     } else if (products.size() == 0) {
-        //         sb = new StringBuilder("{ \"error\": \"")
-        //                 .append("No products matched the criteria ")
-        //                 .append(request.getQueryString())
-        //                 .append("\" }");
-        //         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        //     }
-        //     out.println(sb.toString());
-        // } catch (NullPointerException e) {
-        //     logger.info("No parameter passed");
-        // }
-        sb = new StringBuilder();
-        sb.append("HISTORY WAS HERE!!!!!");
-        out.println(sb.toString());
+        try {
+            System.out.println("Creating ParameterParser");
+            paramParser = new ParameterParser(request.getQueryString().split("&"));
+            System.out.println("Filtering ParameterParser");
+            Predicate<Product> filter = paramParser.filter();
+            System.out.println("Setting property");
+            System.setProperty("ProductLine", getServletContext().getInitParameter("HistoryProductLine"));
+            //System.out.println("ProductLine property: " + System.getProperty("ProductLine"));
+            System.out.println("Creting productline");
+            ProductLine productLine = ProductLineFactory.getProductLine();
+            System.out.println("Filtering products");
+            List<Product> products = new ArrayList<Product>();
+            System.out.println(paramParser.addedStartDate() + "   " + paramParser.addedEndDate());
+            if (!paramParser.addedStartDate().equals("") || !paramParser.addedEndDate().equals("")) {
+                System.out.println("Getting by added history");
+                products = productLine.getProductsByAddedHistory(paramParser.addedStartDate(), paramParser.addedEndDate());
+            } else if (!paramParser.priceStartDate().equals("") || !paramParser.priceEndDate().equals("")) {
+                products = productLine.getProductsFilteredBy(filter);
+            }
+            System.out.println("Formaterar till JSON");
+            Formatter formatter = FormatterFactory.getFormatter();
+            String json = formatter.format(products);
+            sb = new StringBuilder(json);
+            if (paramParser.invalidArgs().size() != 0 &&
+                    products.size() == 0) {
+                sb = new StringBuilder("{ \"error\": \"")
+                        .append("Bad parameters: ")
+                        .append(paramParser.invalidArgs().toString())
+                        .append("\" }");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            } else if (products.size() == 0) {
+                sb = new StringBuilder("{ \"error\": \"")
+                        .append("No products matched the criteria ")
+                        .append(request.getQueryString())
+                        .append("\" }");
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            }
+            out.println(sb.toString());
+        } catch (NullPointerException e) {
+            logger.info("No parameter passed");
+        }
         out.close();
     }
     /* GOT broken pipe - TODO: investigate why - no time now */

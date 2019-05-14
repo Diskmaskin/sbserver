@@ -70,7 +70,9 @@ public class DBHelper {
         .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
         .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
         .append(";");
-      //System.out.println("SQL: " + SQL);
+        //SELECT product.name, product.nr, product.alcohol, product.price, product.volume, product.type, product.added, product.dropped, 
+        //productGroup.name FROM product JOIN productGroup ON product.productGroupId = productGroup.id;
+      // System.out.println("SQL: " + SQL.toString());
       return statement.executeQuery(SQL.toString());
     } catch (SQLException sqle) {
       System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
@@ -78,10 +80,33 @@ public class DBHelper {
     }
   }
 
-  public static ResultSet addedHistoryResultSet() {
+  public static ResultSet addedHistoryResultSet(final String START_DATE, final String END_DATE) {
+    try {
+      Statement statement = connection.createStatement();
+      StringBuilder SQL = new StringBuilder("SELECT ")
+        .append(PRODUCT_TABLE).append(".").append(PRODUCT_NAME)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(PRODUCT_NR)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(ALCOHOL)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(PRICE)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(VOLUME)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(TYPE)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(ADDED)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(DROPPED)
+        .append(", ").append(PRODUCT_GROUP_TABLE).append(".").append(PRODUCT_GROUP)
+        .append(" FROM ").append(PRODUCT_TABLE).append(" JOIN ").append(PRODUCT_GROUP_TABLE)
+        .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
+        .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
+        .append(" WHERE ADDED BETWEEN ").append(START_DATE).append(" AND ").append(END_DATE)
+        .append(";");
+        // System.out.println(SQL.toString());
+        return statement.executeQuery(SQL.toString());
+    } catch (SQLException sqle) {
+      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      return null;
+    }
+    
     //SELECT product.name, product.nr, product.alcohol, product.price, product.volume, product.type, product.added, product.dropped, productGroup.name
-    //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'start_date' AND 'end_date';
-    return null;
+    //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'added_start_date' AND 'end_date';
   }
 
   public static ResultSet priceHistoryResultSet() {

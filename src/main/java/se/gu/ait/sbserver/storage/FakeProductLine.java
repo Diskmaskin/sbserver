@@ -85,5 +85,10 @@ public class FakeProductLine implements ProductLine {
     products.add(getFakeProduct("Abrigo Giovanni Piemonte Mix 1","732.0","13.5","4500","7096809","Rött vin",""));
     //products.add(getFakeProduct("", "", "", "", "", "", "", "");
   }
+
+  @Override
+  public List<Product> getProductsByAddedHistory(String start, String end) {
+    return null;
+  }
   
 }
