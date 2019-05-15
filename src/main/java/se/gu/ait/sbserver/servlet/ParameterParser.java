@@ -15,7 +15,7 @@ public class ParameterParser {
   }
 
   private String addedStartDate = "";
-  private String addedEndDate = "";
+  private String addedEndDate = "date()";
   private String priceStartDate = "";
   private String priceEndDate = "";
 
@@ -43,7 +43,9 @@ public class ParameterParser {
           "min_alcohol",
           "max_alcohol", 
           "added_start_date",
-          "added_end_date"
+          "added_end_date",
+          "price_start_date",
+          "price_end_date"
         }).collect(Collectors.toList()).contains(key.split("=")[0]);
   }
   
@@ -72,8 +74,12 @@ public class ParameterParser {
           addedStartDate = value;
           System.out.println(value);
         } else if (arg.split("=")[0].equals("added_end_date")){
-          addedEndDate = value;
+          addedEndDate = "'" + value + "'";
           System.out.println(value);
+        } else if (arg.split("=")[0].equals("price_start_date")) {
+          priceStartDate = value;
+        } else if (arg.split("=")[0].equals("price_end_date")) {
+          priceEndDate = value;
         }
       }
     }

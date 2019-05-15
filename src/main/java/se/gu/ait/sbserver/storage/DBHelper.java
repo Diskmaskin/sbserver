@@ -96,7 +96,7 @@ public class DBHelper {
         .append(" FROM ").append(PRODUCT_TABLE).append(" JOIN ").append(PRODUCT_GROUP_TABLE)
         .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
         .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
-        .append(" WHERE ADDED BETWEEN ").append(START_DATE).append(" AND ").append(END_DATE)
+        .append(" WHERE ADDED BETWEEN '").append(START_DATE).append("' AND ").append(END_DATE)
         .append(";");
         // System.out.println(SQL.toString());
         return statement.executeQuery(SQL.toString());
