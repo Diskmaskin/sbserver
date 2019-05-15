@@ -12,9 +12,6 @@ public class ProductLineFactory {
 
   private static final ProductLine SQL_PRODUCT_LINE = 
     new SQLBasedProductLine();
-
-  private static final ProductLine SQL_HISTORY_PRODUCT_LINE =
-    new SQLBasedHistoryProductLine();
   
   private static final ProductLine FAKE_PRODUCT_LINE = 
     new FakeProductLine();
@@ -34,8 +31,6 @@ public class ProductLineFactory {
     //System.out.println("ProductLine: " + System.getProperty("ProductLine"));
     if ("DB".equals(System.getProperty("ProductLine"))) {
       return SQL_PRODUCT_LINE;
-    } else if ("DB".equals(System.getProperty("HistoryProductLine"))) {
-      return SQL_HISTORY_PRODUCT_LINE;
     } else {
       return FAKE_PRODUCT_LINE; // A product line with hard-coded products
     }

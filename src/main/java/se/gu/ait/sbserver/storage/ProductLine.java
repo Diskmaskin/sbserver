@@ -34,4 +34,6 @@ public interface ProductLine {
 
   public List<Product> getProductsByAddedHistory(String start, String end);
 
+  public List<Product> getProductByPriceHistory(int nr, String start, String end);
+
 }

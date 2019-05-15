@@ -90,5 +90,10 @@ public class FakeProductLine implements ProductLine {
   public List<Product> getProductsByAddedHistory(String start, String end) {
     return null;
   }
+
+  @Override
+  public List<Product> getProductByPriceHistory(int nr, String start, String end) {
+    return null;
+  }
   
 }

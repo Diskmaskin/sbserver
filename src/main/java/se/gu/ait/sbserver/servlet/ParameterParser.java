@@ -17,7 +17,8 @@ public class ParameterParser {
   private String addedStartDate = "";
   private String addedEndDate = "date()";
   private String priceStartDate = "";
-  private String priceEndDate = "";
+  private String priceEndDate = "date()";
+  private int nr = -1;
 
   public Predicate<Product> filter() {
     List<Predicate<Product>> predicates = parse(); // get a list of predicates
@@ -35,6 +36,15 @@ public class ParameterParser {
     }
   }
 
+  private static boolean isInteger(String value) {
+    try {
+      Integer.parseInt(value);
+      return true;
+    } catch (NumberFormatException nfe) {
+      return false;
+    }
+  }
+
   private boolean isValidKey(String key) {
     return key.split("=").length==2 &&
       Arrays.stream(new String[] {
@@ -45,7 +55,8 @@ public class ParameterParser {
           "added_start_date",
           "added_end_date",
           "price_start_date",
-          "price_end_date"
+          "price_end_date",
+          "nr"
         }).collect(Collectors.toList()).contains(key.split("=")[0]);
   }
   
@@ -54,7 +65,9 @@ public class ParameterParser {
     List<String> validArgs = new ArrayList<>(Arrays.asList(args));
     validArgs.removeIf(s->!isValidKey(s));
     for (String arg : validArgs) {
-      if (isDouble(arg.split("=")[1])) {
+      if (arg.split("=")[0].equals("nr") && isInteger(arg.split("=")[1])) {
+        nr = Integer.parseInt(arg.split("=")[1]);
+      } else if (isDouble(arg.split("=")[1])) {
         double value = Double.parseDouble(arg.split("=")[1]);
         switch(arg.split("=")[0]) { // Check what filter it is
           case "max_price": predicates.add(p -> p.price() <= value);
@@ -77,9 +90,9 @@ public class ParameterParser {
           addedEndDate = "'" + value + "'";
           System.out.println(value);
         } else if (arg.split("=")[0].equals("price_start_date")) {
-          priceStartDate = value;
+          priceStartDate = "'" + value + "'";
         } else if (arg.split("=")[0].equals("price_end_date")) {
-          priceEndDate = value;
+          priceEndDate = "'" + value + "'";
         }
       }
     }
@@ -107,6 +120,10 @@ public class ParameterParser {
 
   public String priceEndDate() {
     return priceEndDate;
+  }
+
+  public int nr() {
+    return nr;
   }
 
 }

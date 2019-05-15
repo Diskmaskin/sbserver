@@ -109,9 +109,32 @@ public class DBHelper {
     //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'added_start_date' AND 'end_date';
   }
 
-  public static ResultSet priceHistoryResultSet() {
+  public static ResultSet priceHistoryResultSet(int nr, String start, String end) {
+    try {
+      Statement statement = connection.createStatement();
+      StringBuilder SQL = new StringBuilder("SELECT ")
+        .append(PRODUCT_TABLE).append(".").append(PRODUCT_NAME)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(PRODUCT_NR)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(ALCOHOL)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(PRICE)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(VOLUME)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(TYPE)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(ADDED)
+        .append(", ").append(PRODUCT_TABLE).append(".").append(DROPPED)
+        .append(", ").append(PRODUCT_GROUP_TABLE).append(".").append(PRODUCT_GROUP)
+        .append(" FROM ").append(PRODUCT_TABLE).append(" JOIN ").append(PRODUCT_GROUP_TABLE)
+        .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
+        .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
+        .append(" WHERE ADDED BETWEEN '").append(START_DATE).append("' AND ").append(END_DATE)
+        .append(";");
+        // System.out.println(SQL.toString());
+        return statement.executeQuery(SQL.toString());
+    } catch (SQLException sqle) {
+      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      return null;
+    }
+    
     //SELECT nr, price, date FROM priceHistory WHERE nr=??? AND date between 'start_date' AND 'end_date';
-    return null;
   }
 
 }

@@ -51,7 +51,7 @@ public class HistoryWebAPI extends HttpServlet {
             System.out.println("Filtering ParameterParser");
             Predicate<Product> filter = paramParser.filter();
             System.out.println("Setting property");
-            System.setProperty("ProductLine", getServletContext().getInitParameter("HistoryProductLine"));
+            System.setProperty("ProductLine", getServletContext().getInitParameter("ProductLine"));
             //System.out.println("ProductLine property: " + System.getProperty("ProductLine"));
             System.out.println("Creting productline");
             ProductLine productLine = ProductLineFactory.getProductLine();
@@ -61,8 +61,8 @@ public class HistoryWebAPI extends HttpServlet {
             if (!paramParser.addedStartDate().equals("") || !paramParser.addedEndDate().equals("")) {
                 System.out.println("Getting by added history");
                 products = productLine.getProductsByAddedHistory(paramParser.addedStartDate(), paramParser.addedEndDate());
-            } else if (!paramParser.priceStartDate().equals("") || !paramParser.priceEndDate().equals("")) {
-                products = productLine.getProductsFilteredBy(filter);
+            } else if (paramParser.nr() != -1 && !paramParser.priceStartDate().equals("") || !paramParser.priceEndDate().equals("")) {
+                products = productLine.getProductByPriceHistory(paramParser.nr(), paramParser.priceStartDate(), paramParser.priceEndDate());
             }
             System.out.println("Formaterar till JSON");
             Formatter formatter = FormatterFactory.getFormatter();
