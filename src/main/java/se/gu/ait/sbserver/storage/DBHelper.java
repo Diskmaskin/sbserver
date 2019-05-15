@@ -24,6 +24,7 @@ public class DBHelper {
   // Tables
   private static final String PRODUCT_TABLE = "product";
   private static final String PRODUCT_GROUP_TABLE = "productGroup";
+  private static final String PRICE_HISTORY = "priceHistory";
   // Product table columns
   private static final String PRODUCT_NR = "nr";
   private static final String PRODUCT_NAME = "name";
@@ -109,31 +110,47 @@ public class DBHelper {
     //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'added_start_date' AND 'end_date';
   }
 
-  public static ResultSet priceHistoryResultSet(int nr, String start, String end) {
+  public static ResultSet priceHistoryResultSet(final int NR, final String START_DATE, final String END_DATE) {
     try {
       Statement statement = connection.createStatement();
       StringBuilder SQL = new StringBuilder("SELECT ")
         .append(PRODUCT_TABLE).append(".").append(PRODUCT_NAME)
-        .append(", ").append(PRODUCT_TABLE).append(".").append(PRODUCT_NR)
+        .append(", ").append(PRICE_HISTORY).append(".").append(PRODUCT_NR)
         .append(", ").append(PRODUCT_TABLE).append(".").append(ALCOHOL)
-        .append(", ").append(PRODUCT_TABLE).append(".").append(PRICE)
+        .append(", ").append(PRICE_HISTORY).append(".").append(PRICE)
         .append(", ").append(PRODUCT_TABLE).append(".").append(VOLUME)
         .append(", ").append(PRODUCT_TABLE).append(".").append(TYPE)
-        .append(", ").append(PRODUCT_TABLE).append(".").append(ADDED)
+        .append(", ").append(PRICE_HISTORY).append(".").append(ADDED)
         .append(", ").append(PRODUCT_TABLE).append(".").append(DROPPED)
         .append(", ").append(PRODUCT_GROUP_TABLE).append(".").append(PRODUCT_GROUP)
-        .append(" FROM ").append(PRODUCT_TABLE).append(" JOIN ").append(PRODUCT_GROUP_TABLE)
-        .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
-        .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
-        .append(" WHERE ADDED BETWEEN '").append(START_DATE).append("' AND ").append(END_DATE)
-        .append(";");
-        // System.out.println(SQL.toString());
+        .append(" FROM ").append(PRICE_HISTORY).append(" JOIN ").append(PRODUCT_TABLE)
+        .append(" ON ").append(PRICE_HISTORY).append(".").append(PRODUCT_NR)
+        .append("=").append(PRODUCT_TABLE).append(".").append(PRODUCT_NR)
+        .append(" JOIN ").append(PRODUCT_GROUP_TABLE).append(" ON ").append(PRODUCT_TABLE)
+        .append(".").append(PRODUCT_GROUP_ID).append("=").append(PRODUCT_GROUP_TABLE)
+        .append(".").append(ID).append(" WHERE ").append(PRICE_HISTORY).append(".").append(ADDED)
+        .append(" BETWEEN ").append(START_DATE).append(" AND ").append(END_DATE);
+        if (NR != -1) {
+          SQL.append(" AND ").append(PRICE_HISTORY).append(".").append(PRODUCT_NR).append("=").append(NR);
+        }
+        SQL.append(";");
+        // .append(PRODUCT_NR).append(", ").append(PRICE).append(", ").append(ADDED)
+        // .append(" FROM ").append(PRICE_HISTORY).append(" WHERE ").append(PRODUCT_NR)
+        // .append("=").append(NR).append(" AND ").append(ADDED).append(" BETWEEN ")
+        // .append(START_DATE).append(" AND ").append(END_DATE).append(";");
+        System.out.println(SQL.toString());
         return statement.executeQuery(SQL.toString());
     } catch (SQLException sqle) {
       System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
       return null;
     }
     
+    // SELECT product.name, priceHistory.nr, product.alcohol, priceHistory.price, product.volume, 
+    // product.type, priceHistory.added, product.dropped, productGroup.name as productgroup FROM 
+    // priceHistory JOIN product ON priceHistory.nr = product.nr JOIN productgroup ON 
+    // product.productGroupID = productGroup.id WHERE priceHistory.added between '2018-04-03' 
+    // AND '2019-09-02' AND dropped=0;
+
     //SELECT nr, price, date FROM priceHistory WHERE nr=??? AND date between 'start_date' AND 'end_date';
   }
 

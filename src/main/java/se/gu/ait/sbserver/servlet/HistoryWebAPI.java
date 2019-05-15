@@ -58,10 +58,10 @@ public class HistoryWebAPI extends HttpServlet {
             System.out.println("Filtering products");
             List<Product> products = new ArrayList<Product>();
             System.out.println(paramParser.addedStartDate() + "   " + paramParser.addedEndDate());
-            if (!paramParser.addedStartDate().equals("") || !paramParser.addedEndDate().equals("")) {
+            if (!paramParser.addedStartDate().equals("") || !paramParser.addedEndDate().equals("date()")) {
                 System.out.println("Getting by added history");
                 products = productLine.getProductsByAddedHistory(paramParser.addedStartDate(), paramParser.addedEndDate());
-            } else if (paramParser.nr() != -1 && !paramParser.priceStartDate().equals("") || !paramParser.priceEndDate().equals("")) {
+            } else if (paramParser.nr() != -1 || !paramParser.priceStartDate().equals("") || !paramParser.priceEndDate().equals("date()")) {
                 products = productLine.getProductByPriceHistory(paramParser.nr(), paramParser.priceStartDate(), paramParser.priceEndDate());
             }
             System.out.println("Formaterar till JSON");

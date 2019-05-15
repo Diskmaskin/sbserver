@@ -143,7 +143,7 @@ public class JsonExporter implements Product.Exporter {
       .append("    \"nr\": ")
       .append(String.format("%d", nr)).append(",\n")
       .append("    \"added\": \"")
-      .append(escape(added)).append("\"\n")
+      .append(escape(added)).append("\",\n")
       .append("    \"dropped\": ")
       .append(String.format("%d", dropped)).append(",\n")
       .append("    \"product_group\": \"")
