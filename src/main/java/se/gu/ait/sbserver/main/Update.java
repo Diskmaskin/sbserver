@@ -25,7 +25,8 @@ public class Update {
         List<Product> changedProducts = new ArrayList<Product>();
         List<Product> newPriceProducts = new ArrayList<Product>();
 
-        System.out.println("\nBEFORE\nnewProducts.size: " + newProducts.size());
+        System.out.println("\nBEFORE");
+        System.out.println("newProducts.size: " + newProducts.size());
         System.out.println("oldProducts.size: " + oldProducts.size());
         for (Product np : newProducts) {
             if (!oldProducts.contains(np)) {
@@ -40,9 +41,9 @@ public class Update {
             }
         }
         System.out.println("\nAFTER");
-        if (newProducts != null) System.out.println("newProducts.size: " + newProducts.size());
-        if (changedProducts != null) System.out.println("changedProducts.size: " + changedProducts.size());
-
+        System.out.println("newProducts.size: " + newProducts.size());
+        System.out.println("changedProducts.size: " + changedProducts.size());
+        System.out.println("newPriceProducts.size: " + newPriceProducts.size());
         //REPLACE product-PRODUCTS IN DATABASE
         //INSERT NEW priceHistory-PRODUCTS IN DATABASE
     }
