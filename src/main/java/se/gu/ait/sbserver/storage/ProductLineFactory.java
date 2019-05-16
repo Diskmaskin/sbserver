@@ -12,6 +12,9 @@ public class ProductLineFactory {
 
   private static final ProductLine SQL_PRODUCT_LINE = 
     new SQLBasedProductLine();
+
+  private static final ProductLine XML_BASED_PRODUCT_LINE =
+    new XMLBasedProductLine();
   
   private static final ProductLine FAKE_PRODUCT_LINE = 
     new FakeProductLine();
@@ -29,11 +32,16 @@ public class ProductLineFactory {
    */
   public static ProductLine getProductLine() {
     //System.out.println("ProductLine: " + System.getProperty("ProductLine"));
-    if ("DB".equals(System.getProperty("ProductLine"))) {
+    if ("DB".equals(System.getProperty("ProductLine")) || System.getProperty("PL").equals("ProductLine")) {
       return SQL_PRODUCT_LINE;
     } else {
       return FAKE_PRODUCT_LINE; // A product line with hard-coded products
     }
     //return new XMLBasedProductLine();
   }
+
+  public static ProductLine getXMLBasedProductLine() {
+    return XML_BASED_PRODUCT_LINE;
+  }
+
 }
