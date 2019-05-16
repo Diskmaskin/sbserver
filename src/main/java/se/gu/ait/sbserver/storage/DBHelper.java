@@ -71,7 +71,7 @@ public class DBHelper {
         .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
         .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
         .append(";");
-        //SELECT product.name, product.nr, product.alcohol, product.price, product.volume, product.type, product.added, product.dropped, 
+        //SELECT product.name, product.nr, product.alcohol, product.price, product.volume, product.type, product.added, product.dropped,
         //productGroup.name FROM product JOIN productGroup ON product.productGroupId = productGroup.id;
       // System.out.println("SQL: " + SQL.toString());
       return statement.executeQuery(SQL.toString());
@@ -97,7 +97,7 @@ public class DBHelper {
         .append(" FROM ").append(PRODUCT_TABLE).append(" JOIN ").append(PRODUCT_GROUP_TABLE)
         .append(" ON ").append(PRODUCT_TABLE).append(".").append(PRODUCT_GROUP_ID)
         .append(" = ").append(PRODUCT_GROUP_TABLE).append(".").append(ID)
-        .append(" WHERE ADDED BETWEEN '").append(START_DATE).append("' AND ").append(END_DATE)
+        .append(" WHERE ").append(ADDED).append(" BETWEEN '").append(START_DATE).append("' AND ").append(END_DATE)
         .append(";");
         // System.out.println(SQL.toString());
         return statement.executeQuery(SQL.toString());
@@ -105,9 +105,9 @@ public class DBHelper {
       System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
       return null;
     }
-    
+
     //SELECT product.name, product.nr, product.alcohol, product.price, product.volume, product.type, product.added, product.dropped, productGroup.name
-    //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'added_start_date' AND 'end_date';
+    //FROM product JOIN productGroup ON product.productGroupID=productGroup.id WHERE added between 'added_start_date' AND 'added_end_date';
   }
 
   public static ResultSet priceHistoryResultSet(final int NR, final String START_DATE, final String END_DATE) {
@@ -144,12 +144,12 @@ public class DBHelper {
       System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
       return null;
     }
-    
-    // SELECT product.name, priceHistory.nr, product.alcohol, priceHistory.price, product.volume, 
-    // product.type, priceHistory.added, product.dropped, productGroup.name as productgroup FROM 
-    // priceHistory JOIN product ON priceHistory.nr = product.nr JOIN productgroup ON 
-    // product.productGroupID = productGroup.id WHERE priceHistory.added between '2018-04-03' 
-    // AND '2019-09-02' AND dropped=0;
+
+    // SELECT product.name, priceHistory.nr, product.alcohol, priceHistory.price, product.volume,
+    // product.type, priceHistory.added, product.dropped, productGroup.name as productgroup FROM
+    // priceHistory JOIN product ON priceHistory.nr = product.nr JOIN productgroup ON
+    // product.productGroupID = productGroup.id WHERE priceHistory.added between '2018-04-03'
+    // AND '2019-09-02';
 
     //SELECT nr, price, date FROM priceHistory WHERE nr=??? AND date between 'start_date' AND 'end_date';
   }
