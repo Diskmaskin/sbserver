@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import se.gu.ait.sbserver.domain.Product;
+import se.gu.ait.sbserver.storage.DBHelper;
 import se.gu.ait.sbserver.storage.ProductLineFactory;
 import se.gu.ait.sbserver.storage.XMLBasedProductLine;
 import se.gu.ait.sbserver.storage.SQLBasedProductLine;
@@ -44,7 +45,10 @@ public class Update {
         System.out.println("newProducts.size: " + newProducts.size());
         System.out.println("changedProducts.size: " + changedProducts.size());
         System.out.println("newPriceProducts.size: " + newPriceProducts.size());
+        
+        DBHelper dbHelper = new DBHelper();
         //REPLACE product-PRODUCTS IN DATABASE
+        dbHelper.updateProducts(changedProducts);
         //INSERT NEW priceHistory-PRODUCTS IN DATABASE
     }
 }

@@ -5,6 +5,10 @@ import java.sql.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
+import se.gu.ait.sbserver.domain.Product;
+
 
 public class DBHelper {
   private static final Logger logger = LogManager.getLogger(DBHelper.class.getName());
@@ -152,6 +156,28 @@ public class DBHelper {
     // AND '2019-09-02';
 
     //SELECT nr, price, date FROM priceHistory WHERE nr=??? AND date between 'start_date' AND 'end_date';
+  }
+
+  public static void updateProducts(List<Product> products) {
+    SQLInsertExporter exporter = new SQLInsertExporter();
+    for (Product p : products) {
+      exporter.addName(p.name());
+      exporter.addPrice(p.price());
+      exporter.addAlcohol(p.alcohol());
+      exporter.addVolume(p.volume());
+      exporter.addNr(p.nr());
+      exporter.addProductGroup(p.productGroup());
+      exporter.addType(p.type());
+      exporter.addAdded(p.added());
+      exporter.addDropped(p.dropped());
+      try {
+        Statement statement = connection.createStatement();        
+          System.out.println(exporter.toSQLReplaceString());
+          statement.executeQuery(exporter.toSQLReplaceString());
+      } catch (SQLException sqle) {
+        System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      }
+    }
   }
 
 }

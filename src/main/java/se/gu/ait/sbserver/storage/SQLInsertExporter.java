@@ -129,9 +129,9 @@ public class SQLInsertExporter implements Product.Exporter {
   public String toSQLReplaceString() {
     return String
       .format("REPLACE INTO product" +
-              "(nr, name, price, alcohol, volume, productGroupId, type) " +
-              "VALUES(%d, \"%s\", %f, %f, %d, \"%d\", \"%s\");",
+              "(nr, name, price, alcohol, volume, productGroupId, type, added, dropped) " +
+              "VALUES(%d, \"%s\", %f, %f, %d, \"%d\", \"%s\", \"%s\", \"%d\");",
               nr, escape(name), price, alcohol,
-              volume, ProductGroups.idFromProductGroup(productGroup), escape(type));
+              volume, ProductGroups.idFromProductGroup(productGroup), escape(type), escape(added), dropped);
   }
 }
