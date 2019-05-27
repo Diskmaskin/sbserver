@@ -28,9 +28,11 @@ public class Update {
         List<Product> newPriceProducts = new ArrayList<Product>();
         List<String> newProductGroups = new ArrayList<String>();
 
-        System.out.println("\nBEFORE");
+        System.out.println("\n----------------------------------------");
         System.out.println("Products from Systembolaget API: " + newProducts.size());
         System.out.println("Products in database: " + oldProducts.size());
+        System.out.println("----------------------------------------");
+
         for (Product np : newProducts) {
             if (!oldProducts.contains(np)) {
                 changedProducts.add(np);
@@ -54,8 +56,10 @@ public class Update {
         
 
 
-        System.out.println("\nAFTER");
+        System.out.println("\n----------------------------------------");
         System.out.println("Changed products: " + changedProducts.size());
         System.out.println("Changed price products: " + newPriceProducts.size());
+        System.out.println("----------------------------------------");
+
     }
 }
