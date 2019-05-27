@@ -172,12 +172,26 @@ public class DBHelper {
       exporter.addDropped(p.dropped());
       try {
         Statement statement = connection.createStatement();        
-          System.out.println(exporter.toSQLReplaceString());
-          statement.executeQuery(exporter.toSQLReplaceString());
+        System.out.println(exporter.toSQLReplaceString());
+        statement.executeQuery(exporter.toSQLReplaceString());
       } catch (SQLException sqle) {
         System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
       }
     }
+  }
+
+  public static void insertPriceHistory(List<Product> products) {
+    
+    for (Product p : products) {
+      try {
+        Statement statement = connection.createStatement();
+        String SQL ="INSERT INTO priceHistory(nr, price, added) SELECT nr, price, date() FROM product WHERE nr=" + p.nr() + ";";
+        statement.executeQuery(SQL);
+      } catch (SQLException sqle) {
+        System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      }
+    }
+
   }
 
 }

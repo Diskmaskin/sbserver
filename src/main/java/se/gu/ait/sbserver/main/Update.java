@@ -44,9 +44,13 @@ public class Update {
         
         DBHelper dbHelper = new DBHelper();
 
-        //REPLACE product-PRODUCTS IN DATABASE
+        //INSERT NEW priceHistory-PRODUCTS INTO DATABASE
+        dbHelper.insertPriceHistory(newPriceProducts);
+
+        //REPLACE product-PRODUCTS INTO DATABASE
         dbHelper.updateProducts(changedProducts);
-        //INSERT NEW priceHistory-PRODUCTS IN DATABASE
+        
+        
 
 
         System.out.println("\nAFTER");
