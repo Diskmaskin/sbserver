@@ -20,11 +20,13 @@ public class Update {
 
     public Update() {
         System.setProperty("PL", "ProductLine");
+        DBHelper dbHelper = new DBHelper();
 
         newProducts = ProductLineFactory.getXMLBasedProductLine().getAllProducts();
         oldProducts = ProductLineFactory.getProductLine().getAllProducts();
         List<Product> changedProducts = new ArrayList<Product>();
         List<Product> newPriceProducts = new ArrayList<Product>();
+        List<String> newProductGroups = new ArrayList<String>();
 
         System.out.println("\nBEFORE");
         System.out.println("Products from Systembolaget API: " + newProducts.size());
@@ -32,6 +34,7 @@ public class Update {
         for (Product np : newProducts) {
             if (!oldProducts.contains(np)) {
                 changedProducts.add(np);
+                if (!dbHelper.isProductGroup(np.productGroup())) dbHelper.insertNewProductGroup(np.productGroup());
                 for (Product op : oldProducts) {
                     if (op.nr() == np.nr()) {
                         if (op.price() != np.price()) {
@@ -41,8 +44,6 @@ public class Update {
                 }
             }
         }
-        
-        DBHelper dbHelper = new DBHelper();
 
         //INSERT NEW priceHistory-PRODUCTS INTO DATABASE
         dbHelper.insertPriceHistory(newPriceProducts);

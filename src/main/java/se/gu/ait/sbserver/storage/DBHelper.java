@@ -175,23 +175,46 @@ public class DBHelper {
         System.out.println(exporter.toSQLReplaceString());
         statement.executeQuery(exporter.toSQLReplaceString());
       } catch (SQLException sqle) {
-        System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+        System.err.println("Couldn't replace products: " + sqle.getMessage());
       }
     }
   }
 
   public static void insertPriceHistory(List<Product> products) {
-    
     for (Product p : products) {
       try {
         Statement statement = connection.createStatement();
         String SQL ="INSERT INTO priceHistory(nr, price, added) SELECT nr, price, date() FROM product WHERE nr=" + p.nr() + ";";
         statement.executeQuery(SQL);
       } catch (SQLException sqle) {
-        System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+        System.err.println("Couldn't insert products: " + sqle.getMessage());
       }
     }
+  }
 
+  public static boolean isProductGroup(String productGroup) {
+    try {
+      Statement statement = connection.createStatement();
+      ResultSet rs = statement.executeQuery("SELECT id FROM productGroup WHERE name=\"" + productGroup + "\";");
+      if (rs.wasNull()) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (SQLException sqle) {
+      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+    }
+    return true;
+  }
+
+  public static void insertNewProductGroup(String productGroup) {
+    try {
+      Statement statement = connection.createStatement();
+      String SQL = "INSERT INTO productGroup(name) VALUES('" + productGroup + "');";
+      statement.executeQuery(SQL);
+    } catch (SQLException sqle) {
+      System.err.println("Couldn't insert product group: " + sqle.getMessage());
+    }
   }
 
 }

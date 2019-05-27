@@ -15,7 +15,7 @@ do
                 ./update.sh
                 ;;
             "Product search")
-                echo $opt " is not implemented into this test script"
+                echo $opt "is not implemented into this test script"
                 ;;
             "Added history")
                 echo $opt
@@ -30,7 +30,7 @@ do
                 read -p "Atricle number: " nr
                 read -p "From date: " startdate
                 read -p "To date: " enddate
-                nr="nr"$nr
+                nr="nr="$nr
                 startdate="price_start_date="$startdate
                 enddate="price_end_date="$enddate
                 firefox http://localhost:9090/sbserver/history?$nr$AND$startdate$AND$enddate
