@@ -80,7 +80,7 @@ public class DBHelper {
       // System.out.println("SQL: " + SQL.toString());
       return statement.executeQuery(SQL.toString());
     } catch (SQLException sqle) {
-      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      System.err.println("Couldn't get products resultset with products: " + sqle.getMessage());
       return null;
     }
   }
@@ -106,7 +106,7 @@ public class DBHelper {
         // System.out.println(SQL.toString());
         return statement.executeQuery(SQL.toString());
     } catch (SQLException sqle) {
-      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      System.err.println("Couldn't get added history resultset with products: " + sqle.getMessage());
       return null;
     }
 
@@ -145,7 +145,7 @@ public class DBHelper {
         System.out.println(SQL.toString());
         return statement.executeQuery(SQL.toString());
     } catch (SQLException sqle) {
-      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      System.err.println("Couldn't get price history resultset with products: " + sqle.getMessage());
       return null;
     }
 
@@ -172,10 +172,10 @@ public class DBHelper {
       exporter.addDropped(p.dropped());
       try {
         Statement statement = connection.createStatement();        
-        System.out.println(exporter.toSQLReplaceString());
-        statement.executeQuery(exporter.toSQLReplaceString());
+        // System.out.println(exporter.toSQLReplaceString());
+        statement.executeUpdate(exporter.toSQLReplaceString());
       } catch (SQLException sqle) {
-        System.err.println("Couldn't replace products: " + sqle.getMessage());
+        System.err.println("Couldn't replace product: " + p.nr() + " - " + sqle.getMessage());
       }
     }
   }
@@ -185,9 +185,9 @@ public class DBHelper {
       try {
         Statement statement = connection.createStatement();
         String SQL ="INSERT INTO priceHistory(nr, price, added) SELECT nr, price, date() FROM product WHERE nr=" + p.nr() + ";";
-        statement.executeQuery(SQL);
+        statement.executeUpdate(SQL);
       } catch (SQLException sqle) {
-        System.err.println("Couldn't insert products: " + sqle.getMessage());
+        System.err.println("Couldn't insert product price: " + p.nr() + " - " + sqle.getMessage());
       }
     }
   }
@@ -196,13 +196,13 @@ public class DBHelper {
     try {
       Statement statement = connection.createStatement();
       ResultSet rs = statement.executeQuery("SELECT id FROM productGroup WHERE name=\"" + productGroup + "\";");
-      if (rs.wasNull()) {
+      if (rs == null) {
         return false;
       } else {
         return true;
       }
     } catch (SQLException sqle) {
-      System.err.println("Couldn't get resultset with products: " + sqle.getMessage());
+      System.err.println("Couldn't check productGroup: " + productGroup + " - " + sqle.getMessage());
     }
     return true;
   }
@@ -211,7 +211,7 @@ public class DBHelper {
     try {
       Statement statement = connection.createStatement();
       String SQL = "INSERT INTO productGroup(name) VALUES('" + productGroup + "');";
-      statement.executeQuery(SQL);
+      statement.executeUpdate(SQL);
     } catch (SQLException sqle) {
       System.err.println("Couldn't insert product group: " + sqle.getMessage());
     }
