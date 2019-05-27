@@ -85,6 +85,8 @@ public class XMLBasedProductLine implements ProductLine {
       String nr = null;
       String productGroup = null;
       String type = "";
+      String added = null;
+      int dropped = -1;
       boolean hadType = false;
       
       while (eventReader.hasNext()) {
@@ -167,6 +169,22 @@ public class XMLBasedProductLine implements ProductLine {
             continue;
           }
         }
+        if (event.isStartElement()) {
+          StartElement startElement = event.asStartElement();
+          if (startElement.getName().getLocalPart().equals(ADDED)) {
+            event = eventReader.nextEvent();
+            added = (event.asCharacters().getData());
+            continue;
+          }
+        }
+        if (event.isStartElement()) {
+          StartElement startElement = event.asStartElement();
+          if (startElement.getName().getLocalPart().equals(DROPPED)) {
+            event = eventReader.nextEvent();
+            dropped = new Integer((event.asCharacters().getData()));
+            continue;
+          }
+        }
         if (event.isEndElement()) {
           EndElement endElement = event.asEndElement();
           if (endElement.getName().getLocalPart().equals(PRODUCT)) {
@@ -180,6 +198,8 @@ public class XMLBasedProductLine implements ProductLine {
                          .nr(Integer.parseInt(nr))
                          .productGroup(productGroup)
                          .type(type)
+                         .added(added)
+                         .dropped(dropped)
                          .build());
             hadType = false;
             // Some products don't have a nested Type element,

@@ -27,8 +27,8 @@ public class Update {
         List<Product> newPriceProducts = new ArrayList<Product>();
 
         System.out.println("\nBEFORE");
-        System.out.println("newProducts.size: " + newProducts.size());
-        System.out.println("oldProducts.size: " + oldProducts.size());
+        System.out.println("Products from Systembolaget API: " + newProducts.size());
+        System.out.println("Products in database: " + oldProducts.size());
         for (Product np : newProducts) {
             if (!oldProducts.contains(np)) {
                 changedProducts.add(np);
@@ -41,14 +41,16 @@ public class Update {
                 }
             }
         }
-        System.out.println("\nAFTER");
-        System.out.println("newProducts.size: " + newProducts.size());
-        System.out.println("changedProducts.size: " + changedProducts.size());
-        System.out.println("newPriceProducts.size: " + newPriceProducts.size());
         
         DBHelper dbHelper = new DBHelper();
+
         //REPLACE product-PRODUCTS IN DATABASE
         dbHelper.updateProducts(changedProducts);
         //INSERT NEW priceHistory-PRODUCTS IN DATABASE
+
+
+        System.out.println("\nAFTER");
+        System.out.println("Changed products: " + changedProducts.size());
+        System.out.println("Changed price products: " + newPriceProducts.size());
     }
 }
