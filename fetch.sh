@@ -1,7 +1,13 @@
 #!/bin/bash
 
-ADRESS='https://www.systembolaget.se/api/assortment/products/xml'
-TESTADRESS=''
+PRIMARY_ADRESS='https://www.systembolaget.se/api/assortment/products/xml'
+TEST_ADRESS='http://rameau.sandklef.com/systembolaget/20190520/products.xml'
+
+if [[ $1 == "-t" ]]; then
+    ADRESS=$TEST_ADRESS
+else
+    ADRESS=$PRIMARY_ADRESS
+fi
 
 echo -e "Fetching sortiment.xml...\n"
 if [[ -f "resources/sortiment.xml" ]]

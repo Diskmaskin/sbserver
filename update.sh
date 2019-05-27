@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./fetch.sh
+./fetch.sh $1
 PATHSEP=":"
 if [[ $OS == "Windows_NT" ]] || [[ $OSTYPE == "cygwin" ]]
 then
