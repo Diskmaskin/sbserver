@@ -36,7 +36,10 @@ public class Update {
         for (Product np : newProducts) {
             if (!oldProducts.contains(np)) {
                 changedProducts.add(np);
-                if (!dbHelper.isProductGroup(np.productGroup())) dbHelper.insertNewProductGroup(np.productGroup());
+                if (!dbHelper.isProductGroup(np.productGroup())) {
+                    dbHelper.insertNewProductGroup(np.productGroup());
+                    
+                }
                 for (Product op : oldProducts) {
                     if (op.nr() == np.nr()) {
                         if (op.price() != np.price()) {

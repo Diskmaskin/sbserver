@@ -194,15 +194,12 @@ public class DBHelper {
 
   public static boolean isProductGroup(String productGroup) {
     try {
+      // System.out.println("Checking if product group exists");
       Statement statement = connection.createStatement();
-      ResultSet rs = statement.executeQuery("SELECT id FROM productGroup WHERE name=\"" + productGroup + "\";");
-      if (rs == null) {
-        return false;
-      } else {
-        return true;
-      }
+      return statement.executeQuery("SELECT id FROM productGroup WHERE name=\"" + productGroup + "\";").next();
     } catch (SQLException sqle) {
       System.err.println("Couldn't check productGroup: " + productGroup + " - " + sqle.getMessage());
+      System.out.println("SELECT id FROM productGroup WHERE name=\"" + productGroup + "\";");
     }
     return true;
   }
@@ -215,6 +212,18 @@ public class DBHelper {
     } catch (SQLException sqle) {
       System.err.println("Couldn't insert product group: " + sqle.getMessage());
     }
+  }
+
+  public static int getProductGroupId(String productGroup) {
+    try {
+      Statement statement = connection.createStatement();
+      ResultSet rs = statement.executeQuery("SELECT id FROM productGroup WHERE name=\"" + productGroup + "\";");
+      return new Integer(rs.getString(1));
+      
+    } catch (SQLException sqle) {
+      System.err.println("Couldn't get product group ID for: " + productGroup + " - " + sqle.getMessage());
+    }
+    return 0;
   }
 
 }
