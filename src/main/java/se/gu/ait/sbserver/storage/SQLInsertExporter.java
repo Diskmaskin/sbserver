@@ -130,7 +130,7 @@ public class SQLInsertExporter implements Product.Exporter {
     return String
       .format("REPLACE INTO product" +
               "(nr, name, price, alcohol, volume, productGroupId, type, added, dropped) " +
-              "VALUES(%d, \"%s\", %f, %f, %d, %d, \"%s\", \"%s\", %d);",
+              "VALUES(%d, \"%s\", \"%.2f\", \"%.2f\", %d, %d, \"%s\", \"%s\", %d);",
               nr, escape(name), price, alcohol,
               volume, DBHelper.getProductGroupId(productGroup), escape(type), escape(added), dropped);
     // return new String("REPLACE INTO product (nr, name, price, alcohol, volume, productGroupId, type, added, dropped) VALUES(" 

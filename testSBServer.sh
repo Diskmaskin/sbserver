@@ -15,7 +15,7 @@ do
                 ./update.sh
                 ;;
             "Product search")
-                echo $opt "is not implemented into this test script"
+                echo $opt "is not implemented into this test script yet."
                 ;;
             "Added history")
                 echo $opt
@@ -23,6 +23,7 @@ do
                 read -p "To date: " enddate
                 startdate="added_start_date="$startdate
                 enddate="added_end_date="$enddate
+                echo "URL: http://localhost:9090/sbserver/history?$startdate$AND$enddate"
                 firefox http://localhost:9090/sbserver/history?$startdate$AND$enddate
                 ;;
             "Price history")
@@ -33,6 +34,7 @@ do
                 nr="nr="$nr
                 startdate="price_start_date="$startdate
                 enddate="price_end_date="$enddate
+                echo "URL: http://localhost:9090/sbserver/history?$nr$AND$startdate$AND$enddate"
                 firefox http://localhost:9090/sbserver/history?$nr$AND$startdate$AND$enddate
                 ;;
             "Quit")

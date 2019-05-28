@@ -30,15 +30,17 @@ public class Update {
 
         System.out.println("\n========================================");
         System.out.println("Products from Systembolaget API: " + newProducts.size());
-        System.out.println("Products in database: " + oldProducts.size());
+        System.out.println("Existing products in database: " + oldProducts.size());
         System.out.println("========================================");
 
+        System.out.println("\nChecking which products are new or has been changed...");
         for (Product np : newProducts) {
             if (!oldProducts.contains(np)) {
                 changedProducts.add(np);
                 if (!dbHelper.isProductGroup(np.productGroup())) {
+                    System.out.println("New product group encountered.");
                     dbHelper.insertNewProductGroup(np.productGroup());
-                    
+                    System.out.println("New product group created.");
                 }
                 for (Product op : oldProducts) {
                     if (op.nr() == np.nr()) {
@@ -50,14 +52,26 @@ public class Update {
             }
         }
 
-        //INSERT NEW priceHistory-PRODUCTS INTO DATABASE
-        dbHelper.insertPriceHistory(newPriceProducts);
-
-        //REPLACE product-PRODUCTS INTO DATABASE
-        dbHelper.updateProducts(changedProducts);
+        if (newPriceProducts.size() > 0) {
+            //INSERT NEW priceHistory-PRODUCTS INTO DATABASE
+            System.out.println("\nInserting old prices into price history in database...");
+            dbHelper.insertPriceHistory(newPriceProducts);
+        } else {
+            System.out.println("\nNo prices changed.");
+        }
         
+        if (changedProducts.size() > 0) {
+                //REPLACE product-PRODUCTS INTO DATABASE
+            System.out.println("\nInserting new products and updating existing product's information in database...");
+            if (changedProducts.size() > 500) System.out.println("(This may take a while)");
+            dbHelper.updateProducts(changedProducts);
+            
+            System.out.print("\nUpdate finished.");
+        } else {
+            System.out.print("\nNo updates required.");
+        }
         
-
+        System.out.print(" Your database is up to date.");
 
         System.out.println("\n========================================");
         System.out.println("Changed products: " + changedProducts.size());
